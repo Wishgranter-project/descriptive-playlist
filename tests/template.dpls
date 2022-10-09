@@ -1,0 +1,10 @@
+{"title":"Template for tests","description":"test description"}
+{"artist":"Bert Weedon","title":"Lazy Day Blues","genre":["Blues"],"uuid":"ff81ea29-faa3-4523-8ddf-0da011a2a486"}
+{"artist":"Jack Shaindlin","title":"Let's go sunning","soundtrack":"Fallout 3","genre":["Big band","Swing","Jazz"],"uuid":"008540f5-cf34-41ec-8b3f-9e1639695370"}
+{"title":"Nigraj kandeloj dancas","artist":"Animae Vector","genre":"Metal","uuid":"3bf9561a-a198-4ad7-9718-856a22a77e83"}
+{"artist":"Halloween","title":"If I could Fly","genre":["Metal"],"uuid":"920ddaa9-8ef5-4a27-b4a3-f909bd9876da"}
+{"artist":"Blind Guardian","title":"The Bard's Song The Hobbit","genre":["Metal","Power Metal"],"uuid":"5d1b6a63-4505-4d82-92fc-87698c3aaa82"}
+{"artist":"Blind Guardian","title":"Nightfall","genre":["Metal","Power Metal"],"uuid":"6383f158-4d62-4a0e-bbfe-b0c5d3ec113e"}
+
+{"title":"King of fallen grace","artist":"Bloodbound","genre":"Power metal","uuid":"02879963-10e5-4cef-b071-fc0648120c75"}
+{"artist":"Nightwish","title":"Over the hills and far away","genre":["Power metal"],"uuid":"0aa35c66-1037-4020-bfb5-735750093474"}
