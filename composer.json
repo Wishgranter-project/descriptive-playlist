@@ -1,0 +1,34 @@
+{
+    "name": "adinan-cenci/descriptive-playlist",
+    "description": "A library to read and descriptive playlist format.", 
+    "type": "library", 
+    "keywords": ["json-lines", "json"], 
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adinan Cenci",
+            "email": "adinancenci@protonmail.com", 
+            "role": "developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AdinanCenci\\DescriptivePlaylist\\": "src/",
+            "AdinanCenci\\DescriptivePlaylist\\Crud\\": "Crud/",
+            "AdinanCenci\\DescriptivePlaylist\\Tests\\": "tests/",
+            "AdinanCenci\\DescriptivePlaylist\\Utils\\": "Utils/"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "adinan-cenci/json-lines": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "unit-tests": [
+            "./vendor/bin/phpunit tests"
+        ]
+    }
+}
