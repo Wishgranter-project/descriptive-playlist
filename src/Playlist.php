@@ -34,7 +34,7 @@ class Playlist
     public function __set($var, $value) 
     {
         if (in_array($var, ['fileName', 'lineCount', 'items'])) {
-            trigger_error($var . ' is ready only.');
+            throw new \InvalidArgumentException($var . ' is ready only.');
         }
 
         $header = $this->getHeader();
@@ -89,7 +89,10 @@ class Playlist
     public function getItem(int $position) : ?PlaylistItem
     {
         $items = $this->getItems([$position]);
-        return $items ? reset($items) : null;
+
+        return $items
+            ? reset($items) 
+            : null;
     }
 
     /**
@@ -103,10 +106,17 @@ class Playlist
     {
         $items = [];
         $lines = array_map(function($index) { return $index + 1; }, $positions);
-        $objects = $this->jsonLines->getObjects($lines);
+
+        try {
+            $objects = $this->jsonLines->getObjects($lines);
+        } catch(\Exception $e) {
+            return [];
+        }
 
         foreach ($objects as $line => $object) {
-            if (! $object) { continue; }
+            if (! $object) {
+                continue;
+            }
             $index = $line - 1;
             $items[ $index ] = new PlaylistItem($object);
         }
@@ -126,7 +136,7 @@ class Playlist
         do {
             $item = $this->getItem($lastLine);
             $lastLine--;
-        } while(! $item);
+        } while(!$item && $lastLine >= 0);
 
         $index = $lastLine;
         return $item;
@@ -189,7 +199,7 @@ class Playlist
     public function setItem(PlaylistItem $item, int $position = -1) : bool
     {
         if (! $item->isValid($errors)) {
-            trigger_error(implode(', ', $errors));
+            throw new \InvalidArgumentException(implode(', ', $errors));
             return false;
         }
 
@@ -197,7 +207,16 @@ class Playlist
             $this->jsonLines->deleteObject($currentPosition + 1);
         }
 
-        $line = $position == -1 ? $position : $position + 1;
+        $line = $position == -1 
+            ? $position
+            : $position + 1;
+
+        $lastLine = $this->jsonLines->nameLastLine(true);
+
+        $line = $lastLine <= 0 && $line <= 0
+            ? 1
+            : $line;
+
         $this->jsonLines->addObject($item->getData(), $line);
         return true;
     }
@@ -231,9 +250,12 @@ class Playlist
      */
     public function deletePosition(int $position, &$item = null) : bool
     {
-        $item = $this->getItem($position);
-        $this->jsonLines->deleteObject($position);
-        return (bool) $item;
+        if ($item = $this->getItem($position)) {
+            $this->jsonLines->deleteObject($position);
+            return true;
+        }
+
+        return false;
     }
 
     //------------------------------------------
@@ -241,10 +263,18 @@ class Playlist
     /**
      * @return Header
      */
-    protected function getHeader() : Header
+    public function getHeader() : Header
     {
-        $stdObj = $this->jsonLines->getObject(0);
-        $stdObj = $stdObj ? $stdObj : new \stdClass();
+        try {
+            $stdObj = $this->jsonLines->getObject(0);
+        } catch(\Exception $e) {
+            $stdObj = null;
+        }
+
+        $stdObj = $stdObj 
+            ? $stdObj 
+            : new \stdClass();
+
         return new Header($stdObj);
     }
 
@@ -252,9 +282,12 @@ class Playlist
      * @param Header $header
      * @return void
      */
-    protected function setHeader(Header $header) : void
+    public function setHeader(Header $header) : void
     {
-        $header->clear();
+        if (! $header->isValid($errors)) {
+            throw new \InvalidArgumentException(implode(', ', $errors));
+        }
+
         $this->jsonLines->setObject(0, $header->getData());
     }
 }

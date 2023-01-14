@@ -29,8 +29,13 @@ abstract class StdClassWrapper
 
     public function __construct($data = null) 
     {
-        $data = is_object($data) ? $data : new \stdClass();
-        $this->data = $data;
+        if ($data === null) {
+            $this->data = new \stdClass();
+        } else if ($data instanceof \stdClass) {
+            $this->data = $data;
+        } else {
+            throw new \InvalidArgumentException('Inform an object');
+        }
     }
 
     public function __toString() : string
@@ -107,7 +112,7 @@ abstract class StdClassWrapper
             return;
         }
 
-        \trigger_error(implode(', ', $errors), \E_USER_ERROR);
+        throw new \InvalidArgumentException(implode(', ', $errors));
     }
 
     /**

@@ -14,5 +14,5 @@ class Header extends StdClassWrapper
             'is:string',
             'maxLength:255'
         ]
-        ];
+    ];
 }

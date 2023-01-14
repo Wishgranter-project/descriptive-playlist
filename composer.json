@@ -14,7 +14,6 @@
     "autoload": {
         "psr-4": {
             "AdinanCenci\\DescriptivePlaylist\\": "src/",
-            "AdinanCenci\\DescriptivePlaylist\\Crud\\": "Crud/",
             "AdinanCenci\\DescriptivePlaylist\\Tests\\": "tests/",
             "AdinanCenci\\DescriptivePlaylist\\Utils\\": "Utils/"
         }
