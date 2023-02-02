@@ -208,9 +208,10 @@ abstract class StdClassWrapper
 
     protected function validateCustomProperty(string $propertyName, $propertyValue, &$errors = []) : bool
     {
-        $valid = $this->validateRule($propertyName, $propertyValue, $error, 'is:null|alphanumeric|alphanumeric[]');
+        $this->validateRule($propertyName, $propertyValue, $error, 'is:null|alphanumeric|alphanumeric[]');
+        $this->validateRule($propertyName, $propertyValue, $error, 'maxLength:255');
         $errors = empty($error) ? [] : (array) $error;
-        return $valid;
+        return empty($error);
     }
 
     /**
