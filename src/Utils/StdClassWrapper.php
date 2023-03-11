@@ -79,11 +79,32 @@ abstract class StdClassWrapper
     }
 
     /**
-     * Clears invalid data
+     * Clears and tidy up data.
+     *
+     * It unsets invalid or empty properties and 
+     * extracts the values of one-item-long arrays.
      */
     public function clear() : void
     {
         foreach ($this->data as $propertyName => $propertyValue) {
+            if (is_array($propertyValue)) {
+                $propertyValue = array_filter($propertyValue, function($i) 
+                {
+                    return !empty($i) || $i == 0;
+                });
+                $propertyValue = array_values($propertyValue);
+
+                $propertyValue = count($propertyValue) == 1 && $this->validateProperty($propertyName, $propertyValue[0])
+                    ? $propertyValue[0]
+                    : $propertyValue;
+
+                $this->data->{$propertyName} = $propertyValue;
+            }
+
+            if (empty($propertyValue) && $propertyValue != 0) {
+                unset($this->data->{$propertyName});
+            }
+
             if (! $this->validateProperty($propertyName, $propertyValue)) {
                 unset($this->data->{$propertyName});
             }
