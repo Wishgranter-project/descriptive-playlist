@@ -1,32 +1,56 @@
 # Descriptive playlist
 
+A library to read and edit [Descriptive playlist files](https://github.com/adinan-cenci/descriptive-playlist-definition).
+
 ## Instantiating
 
 ```php
 use AdinanCenci\DescriptivePlaylist\Playlist;
-$playlist = new Playlist('my-file.dpls');
+$playlist = new Playlist('path-to/my-file.dpls');
+```
+
+<br><br>
+
+### Playlist properties
+
+```php
+$playlist->fileName; // self-explanatory ( read only )
+$playlist->lineCount; // The number of lines of the file ( read only )
+$playlist->items; // An iterator object to loop through the file.
+```
+
+<br><br>
+
+## The header object
+
+```php
+// Retrieving
+$header = playlist->getHeader();
+
+$header->title = 'my playlist title';
+$header->description = 'description';
+$header->xxxCustomProperty = 'custom value';
+
+// Save changes.
+$playlist->setHeader($header);
 ```
 
 <br><br>
 
 ## Retrieving items
 
-By position:
-
 ```php
+// By position:
 $item = $playlist->getItem(5);
-// or retrieve multiples at once
+// retrieve multiples at once:
 $items = $playlist->getItems([5,7]);
-```
 
-<br><br>
+// By uuid ( $position will be set with the item's position in the playlist ):
+$item = $playlist->getItemByUuid('ff81ea29-faa3-4523-8ddf-0da011a2a486', $position);
+// or retrieve multiples at once ( they will be indexed by their position in the playlist )
+$items = $playlist->getItemsByUuid(['ff81ea29-faa3-4523-8ddf-0da011a2a486', '008540f5-cf34-41ec-8b3f-9e1639695370']);
 
-By uuid:
 
-```php
-$item = $playlist->getItemByUuid('ff81ea29-faa3-4523-8ddf-0da011a2a486');
-// or retrieve multiples at once
-$items = $playlist->getItemsByUuid(['ff81ea29-faa3-4523-8ddf-0da011a2a486','uuid":"008540f5-cf34-41ec-8b3f-9e1639695370']);
 ```
 
 <br><br>
@@ -43,16 +67,14 @@ A valid object must contain an uuid ( it generates one automatically ) and eithe
 
 ```php
 use AdinanCenci\DescriptivePlaylist\PlaylistItem;
+
 $music = new PlaylistItem();
 $music->title = 'Nightfall';
 $music->artist = 'Blind Guardian';
 $playlist->setItem($music); // adds to the end of the file
-```
 
-You may inform the position for the new item.
-
-```php
-$playlist->setItem($music, 10); // add to the 10th position
+// Alternatively you may inform the position for the new item.
+$playlist->setItem($music, 10);
 ```
 
 <br><br>
@@ -65,6 +87,18 @@ $item->featuring = 'Ali Edwards';
 $item->setItem($item); // Moves the item to the end of the file
 $item->setItem($item, 2); // Leaves the item in its original position
 $item->setItem($item, 4); // Moves the item to the 4th position
+```
+
+<br><br>
+
+## Removing items
+
+```php
+$item = $playlist->getItem(10);
+$playlist->delete($item);
+
+// Or delete an item based on its position.
+$playlist->deletePosition(10); // Delete the item in the 10th position.
 ```
 
 <br><br>
