@@ -48,6 +48,11 @@ abstract class StdClassWrapper
         $this->setProperty($property, $value);
     }
 
+    public function __unset($property) : void 
+    {
+        unset($this->data->{$property});
+    }
+
     public function __get($propertyName) 
     {
         return $this->getProperty($propertyName);
@@ -90,7 +95,7 @@ abstract class StdClassWrapper
             if (is_array($propertyValue)) {
                 $propertyValue = array_filter($propertyValue, function($i) 
                 {
-                    return !empty($i) || $i == 0;
+                    return !empty($i) || $i === 0 || $i === '0';
                 });
                 $propertyValue = array_values($propertyValue);
 
@@ -101,7 +106,7 @@ abstract class StdClassWrapper
                 $this->data->{$propertyName} = $propertyValue;
             }
 
-            if (empty($propertyValue) && $propertyValue != 0) {
+            if (empty($propertyValue) && $propertyValue !== 0 && $propertyValue !== '0') {
                 unset($this->data->{$propertyName});
             }
 

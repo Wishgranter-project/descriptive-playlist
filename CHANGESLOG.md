@@ -2,12 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2023-03-25
+
+### Added
+
+- `Header::__unset()` and `PlaylistItem::__unset()` have been implemented.
+
+### Fixed
+
+- `Header::clear()` and `PlaylistItem::clear()` were not cleaning `null` 
+  properties.
+
+---
+
 ## [2.1.0] - 2023-03-11
 
 ### Added
 
-- `Playlist::clear()` and `PlaylistItem::clear()` now also unset empty  
-  properties ( not 0 ) and extract the values of one-item-long propertier.  
+- `Header::clear()` and `PlaylistItem::clear()` now also unset empty  
+  properties ( not `0` or `'0'` ) and extract the values of one-item-long propertier.  
   This can help in saving space and in general making the objects simpler.
 
 ---
