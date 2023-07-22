@@ -4,23 +4,70 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b8cd6d4a321e053430934442db37a39d",
+    "content-hash": "284c5cdc9e0f8fafdd1800cf00f757bb",
     "packages": [
         {
-            "name": "adinan-cenci/json-lines",
-            "version": "v2.0.2",
+            "name": "adinan-cenci/file-editor",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/adinan-cenci/json-lines.git",
-                "reference": "2c83722c1ff84c8f5209782ae4fa264ea260faeb"
+                "url": "https://github.com/adinan-cenci/file-editor.git",
+                "reference": "589eebaf4c9429ba925bb8e768d8417f8adfbf97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adinan-cenci/json-lines/zipball/2c83722c1ff84c8f5209782ae4fa264ea260faeb",
-                "reference": "2c83722c1ff84c8f5209782ae4fa264ea260faeb",
+                "url": "https://api.github.com/repos/adinan-cenci/file-editor/zipball/589eebaf4c9429ba925bb8e768d8417f8adfbf97",
+                "reference": "589eebaf4c9429ba925bb8e768d8417f8adfbf97",
                 "shasum": ""
             },
             "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AdinanCenci\\FileEditor\\": "src/",
+                    "AdinanCenci\\FileEditor\\Tests\\": "tests/",
+                    "AdinanCenci\\FileEditor\\Exception\\": "src/Exception/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adinan Cenci",
+                    "email": "adinancenci@protonmail.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "A library to read and write files.",
+            "support": {
+                "issues": "https://github.com/adinan-cenci/file-editor/issues",
+                "source": "https://github.com/adinan-cenci/file-editor/tree/v1.1.0"
+            },
+            "time": "2023-07-21T11:15:55+00:00"
+        },
+        {
+            "name": "adinan-cenci/json-lines",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adinan-cenci/json-lines.git",
+                "reference": "efde33249c776684c7cfff78c4945dde32eedf5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adinan-cenci/json-lines/zipball/efde33249c776684c7cfff78c4945dde32eedf5e",
+                "reference": "efde33249c776684c7cfff78c4945dde32eedf5e",
+                "shasum": ""
+            },
+            "require": {
+                "adinan-cenci/file-editor": "^1.1",
                 "php": ">=7.0"
             },
             "require-dev": {
@@ -54,9 +101,9 @@
             ],
             "support": {
                 "issues": "https://github.com/adinan-cenci/json-lines/issues",
-                "source": "https://github.com/adinan-cenci/json-lines/tree/v2.0.2"
+                "source": "https://github.com/adinan-cenci/json-lines/tree/v3.0.0"
             },
-            "time": "2022-10-04T23:50:42+00:00"
+            "time": "2023-07-22T10:31:10+00:00"
         }
     ],
     "packages-dev": [
@@ -1800,5 +1847,5 @@
         "php": ">=7.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

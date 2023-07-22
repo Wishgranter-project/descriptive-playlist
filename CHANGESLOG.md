@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.1] - 2023-07-22
+
+### Changed
+
+- Just updating the dependencies, unit tests and documentation.
+
+---
+
 ## [2.2.0] - 2023-03-25
 
 ### Added
@@ -21,7 +29,7 @@ All notable changes to this project will be documented in this file.
 
 - `Header::clear()` and `PlaylistItem::clear()` now also unset empty  
   properties ( not `0` or `'0'` ) and extract the values of one-item-long propertier.  
-  This can help in saving space and in general making the objects simpler.
+  This can help in saving space and in general making the objects cleaner.
 
 ---
 
@@ -61,4 +69,4 @@ All notable changes to this project will be documented in this file.
   `Playlist::getItems()`  
   `Playlist::deletePosition()`
   `Playlist::getLastItem()`: calling those methods on a non-existing file would
-  throw exceptions, now they just return null, empty arrays or false.
+  throw exceptions, now they just return null, empty arrays or `false`.
