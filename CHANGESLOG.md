@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.2] - 2023-07-24
+
+### Fixed
+
+- [isse 1](https://github.com/adinan-cenci/descriptive-playlist/issues/1): A small performance improvement in the `Player::getItemByUuid()` method.
+
+---
+
 ## [2.2.1] - 2023-07-22
 
 ### Changed
