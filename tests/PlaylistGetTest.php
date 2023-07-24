@@ -53,4 +53,13 @@ final class PlaylistGetTest extends Base
 
         $this->assertEquals('Over the hills and far away', $lastItem->title);
     }
+
+    public function testGetItemByUuid() 
+    {
+        $playlist = new Playlist('tests/template.dpls');
+
+        $item = $playlist->getItemByUuid('008540f5-cf34-41ec-8b3f-9e1639695370');
+
+        $this->assertEquals('Let\'s go sunning', $item->title);
+    }
 }
