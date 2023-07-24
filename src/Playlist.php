@@ -148,9 +148,24 @@ class Playlist
      */
     public function getItemsByUuid(array $uuids) : array
     {
-        $search = $this->search();
-        $search->condition('uuid', $uuids, 'IN');
-        return $search->find();
+        $results = [];
+        $aimingFor = count($uuids);
+
+        foreach ($this->items as $position => $item) {
+            if (!$item) {
+                continue;
+            }
+
+            if (in_array($item->uuid, $uuids)) {
+                $results[ $position ] = $item;
+            }
+
+            if (count($results) == $aimingFor) {
+                break;
+            }
+        }
+
+        return $results;
     }
 
     /**
