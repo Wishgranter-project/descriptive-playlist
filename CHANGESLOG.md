@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2023-07-26
+
+### Changed
+
+- [isse 2](https://github.com/adinan-cenci/descriptive-playlist/issues/2): `Player::setItem($item, $position = null)`: If `$item` already exists in the playlist and `$position` is not informed: previously the item would have been moved to the end of the playlist, now the item will remain in its current position.
+
+---
+
 ## [2.2.2] - 2023-07-24
 
 ### Fixed

@@ -71,7 +71,7 @@ use AdinanCenci\DescriptivePlaylist\PlaylistItem;
 $music = new PlaylistItem();
 $music->title = 'Nightfall';
 $music->artist = 'Blind Guardian';
-$playlist->setItem($music); // adds to the end of the file
+$playlist->setItem($music); // adds to the end of the file.
 
 // Alternatively you may inform the position for the new item.
 $playlist->setItem($music, 10);
@@ -84,9 +84,9 @@ $playlist->setItem($music, 10);
 ```php
 $item = $playlist->getItem(2);
 $item->featuring = 'Ali Edwards';
-$item->setItem($item); // Moves the item to the end of the file
-$item->setItem($item, 2); // Leaves the item in its original position
-$item->setItem($item, 4); // Moves the item to the 4th position
+$item->setItem($item); // Leaves the item in its original position.
+$item->setItem($item, 4); // Move the item to the 5th position.
+$item->setItem($item, -1); // Move the item to the end of the playlist.
 ```
 
 <br><br>
