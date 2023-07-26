@@ -8,7 +8,22 @@ use AdinanCenci\DescriptivePlaylist\Playlist;
 
 final class PlaylistSetTest extends Base
 {
-    public function testMoveExisitingItem() 
+    public function testUpdateExistingItem() 
+    {
+        $file = 'tests/files/' . __FUNCTION__ . '.dpls';
+        $this->resetTest($file);
+
+        $playlist = new Playlist($file);
+
+        $fifth = $playlist->getItem(5);
+        $fifth->title = 'Nightfall ( updated )';
+        $playlist->setItem($fifth);
+
+        $updatedItem = $playlist->getItem(5);
+        $this->assertEquals('Nightfall ( updated )', $updatedItem->title);
+    }
+
+    public function testMovingExisitingItem() 
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);
@@ -20,8 +35,7 @@ final class PlaylistSetTest extends Base
         $playlist->setItem($fifth, 0);
 
         $newFirstItem = $playlist->getItem(0);
-        $this->assertEquals($fifth->title, $newFirstItem->title);
-        $this->assertEquals($fifth->uuid, $newFirstItem->uuid);
+        $this->assertEquals('Nightfall ( updated )', $newFirstItem->title);
     }
 
     public function testSetNewItem() 
@@ -30,14 +44,31 @@ final class PlaylistSetTest extends Base
         $this->resetTest($file);
 
         $playlist = new Playlist($file);
-        $new = new PlaylistItem(new \stdClass());
+
+        $new = new PlaylistItem();
         $new->title = 'Jungle Drums';
         $new->soundtrack = 'Half Life';
-        $new->generateUuid();
+
+        $playlist->setItem($new);
+
+        $last = $playlist->getItem(9);
+        $this->assertEquals('Jungle Drums', $last->title);
+    }
+
+    public function testSetNewItemAndInformItsPosition() 
+    {
+        $file = 'tests/files/' . __FUNCTION__ . '.dpls';
+        $this->resetTest($file);
+
+        $playlist = new Playlist($file);
+
+        $new = new PlaylistItem();
+        $new->title = 'Jungle Drums';
+        $new->soundtrack = 'Half Life';
+
         $playlist->setItem($new, 2);
 
         $third = $playlist->getItem(2);
-        $this->assertEquals($third->title, $new->title);
-        $this->assertEquals($third->uuid, $new->uuid);
+        $this->assertEquals('Jungle Drums', $new->title);
     }
 }
