@@ -211,26 +211,32 @@ class Playlist
     /**
      * Updates the item and changes it from place.
      */
-    public function setItem(PlaylistItem $item, int $position = -1) : bool
+    public function setItem(PlaylistItem $item, ?int $newPosition = null) : bool
     {
         if (! $item->isValid($errors)) {
             throw new \InvalidArgumentException(implode(', ', $errors));
             return false;
         }
 
-        if ($this->hasItem($item, $currentPosition)) {
+        $alreadyExists = $this->hasItem($item, $currentPosition);
+
+        if ($alreadyExists) {
+            // Delete from current position.
             $this->jsonLines->deleteObject($currentPosition + 1);
+
+            if ($newPosition == -1) {
+                $line = $this->jsonLines->nameLastLine(true);
+            } else if ($newPosition === null) {
+                $line = $currentPosition + 1;
+            } else {
+                $line = $newPosition + 1;
+            }
+
+        } else {
+            $line = in_array($newPosition, [null, -1])
+                ? $this->jsonLines->nameLastLine(true)
+                : $newPosition + 1;
         }
-
-        $line = $position == -1 
-            ? $position
-            : $position + 1;
-
-        $lastLine = $this->jsonLines->nameLastLine(true);
-
-        $line = $lastLine <= 0 && $line <= 0
-            ? 1
-            : $line;
 
         $this->jsonLines->addObject($item->getData(), $line);
         return true;
