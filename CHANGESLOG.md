@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 2023-08-26
+
+### Added
+- Added `Header::empty()` and `PlaylistItem::empty()` to unset the properties of the object.
+
+---
+
 ## [3.0.0] - 2023-07-26
 
 ### Changed

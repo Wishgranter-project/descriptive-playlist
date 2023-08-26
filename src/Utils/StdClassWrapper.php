@@ -117,6 +117,20 @@ abstract class StdClassWrapper
     }
 
     /**
+     * Clears the stdClass object of all properties $exceptFor the ones specified.
+     * 
+     * @param string[] $exceptFor
+     */
+    public function empty($exceptFor = []) : void
+    {
+        foreach ($this->data as $prp => $v) {
+            if (!in_array($prp, $exceptFor)) {
+                unset($this->data->{$prp});
+            }
+        }
+    }
+
+    /**
      * Returns a "copy" of the stdClass.
      */
     public function getData() : \stdClass
