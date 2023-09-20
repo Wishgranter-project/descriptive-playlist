@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0] - 2023-09-20
+### Changed
+- Renamed `Header::getData()` and `PlaylistItem::getData()` to `::getCopyOfTheData()`.
+- Renamed `Header::clear()` and `PlaylistItem::clear()` to `::sanitize()` to avoid confusion with `::empty()`.
+
+### Added
+- Added `PlaylistItem::createCopy()`.
+
+---
+
 ## [3.1.0] - 2023-08-26
 
 ### Added

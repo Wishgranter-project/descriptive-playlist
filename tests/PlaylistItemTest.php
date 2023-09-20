@@ -175,14 +175,14 @@ final class PlaylistItemTest extends Base
         $this->assertEquals(['Inform a title or an album'], $errors);
     }
 
-    public function testClearData() 
+    public function testSanitizeData() 
     {
         $json = '{"title":["title","cant","be","array"],"cover":["neither","can","cover"],"uuid":"c6a8d990-acec-4be2-bb98-0022c3294c00"}';
         $item = PlaylistItem::createFromJson($json);
 
         $this->assertFalse($item->isValid());
 
-        $item->clear();
+        $item->sanitize();
 
         $this->assertEquals(null, $item->title);
         $this->assertEquals(null, $item->cover);
@@ -191,5 +191,17 @@ final class PlaylistItemTest extends Base
         $item->title = 'the title';
 
         $this->assertTrue($item->isValid());
+    }
+
+    public function testCreateCopy() 
+    {
+        $json = '{"title":"test title","artist":"some random","uuid":"c6a8d990-acec-4be2-bb98-0022c3294c00"}';
+        $original = PlaylistItem::createFromJson($json);
+
+        $copy = $original->createCopy();
+
+        $this->assertEquals($copy->title, $original->title);
+        $this->assertEquals($copy->artist, $original->artist);
+        $this->assertNotEquals($copy->uuid, $original->uuid);
     }
 }

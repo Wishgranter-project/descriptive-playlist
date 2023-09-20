@@ -55,6 +55,18 @@ class PlaylistItem extends StdClassWrapper
         return $this->uuid = Helpers::guidv4();
     }
 
+    /**
+     * Creates a copy of the item, but with a new
+     * uuid, obviously.
+     */
+    public function createCopy() : PlaylistItem 
+    {
+        $copy = new PlaylistItem($this->getCopyOfTheData());
+        $copy->generateUuid();
+
+        return $copy;
+    }
+
     public function isValid(&$errors = []) : bool
     {
         if (empty($this->title) && empty($this->album)) {

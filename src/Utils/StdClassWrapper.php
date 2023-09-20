@@ -84,12 +84,12 @@ abstract class StdClassWrapper
     }
 
     /**
-     * Clears and tidy up data.
+     * Sanitize and tidy up data.
      *
-     * It unsets invalid or empty properties and 
-     * extracts the values of one-item-long arrays.
+     * It unsets invalid or empty properties and transforms
+     * one-item-long arrays into strings/numbers ( when applicable ).
      */
-    public function clear() : void
+    public function sanitize() : void
     {
         foreach ($this->data as $propertyName => $propertyValue) {
             if (is_array($propertyValue)) {
@@ -99,6 +99,7 @@ abstract class StdClassWrapper
                 });
                 $propertyValue = array_values($propertyValue);
 
+                // Transform one-item-long array into a single value.
                 $propertyValue = count($propertyValue) == 1 && $this->validateProperty($propertyName, $propertyValue[0])
                     ? $propertyValue[0]
                     : $propertyValue;
@@ -106,10 +107,12 @@ abstract class StdClassWrapper
                 $this->data->{$propertyName} = $propertyValue;
             }
 
+            // Unset empty properties.
             if (empty($propertyValue) && $propertyValue !== 0 && $propertyValue !== '0') {
                 unset($this->data->{$propertyName});
             }
 
+            // Unset invalid properties.
             if (! $this->validateProperty($propertyName, $propertyValue)) {
                 unset($this->data->{$propertyName});
             }
@@ -131,9 +134,9 @@ abstract class StdClassWrapper
     }
 
     /**
-     * Returns a "copy" of the stdClass.
+     * Returns a copy of the stdClass.
      */
-    public function getData() : \stdClass
+    public function getCopyOfTheData() : \stdClass
     {
         return clone $this->data;
     }

@@ -238,7 +238,7 @@ class Playlist
                 : $newPosition + 1;
         }
 
-        $this->jsonLines->addObject($item->getData(), $line);
+        $this->jsonLines->addObject($item->getCopyOfTheData(), $line);
         return true;
     }
 
@@ -309,6 +309,6 @@ class Playlist
             throw new \InvalidArgumentException(implode(', ', $errors));
         }
 
-        $this->jsonLines->setObject(0, $header->getData());
+        $this->jsonLines->setObject(0, $header->getCopyOfTheData());
     }
 }
