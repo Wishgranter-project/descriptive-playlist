@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.0.0] - 2024-02-27
+### Changed
+- Renamed the package to `wishgranter-project/descriptive-playlist` and namespace to `WishgranterProject\DescriptivePlaylist`.
+
+---
+
 ## [4.0.0] - 2023-09-20
 ### Changed
 - Renamed `Header::getData()` and `PlaylistItem::getData()` to `::getCopyOfTheData()`.
