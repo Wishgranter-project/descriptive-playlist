@@ -1,9 +1,10 @@
-<?php 
-namespace AdinanCenci\DescriptivePlaylist;
+<?php
 
-use AdinanCenci\DescriptivePlaylist\Utils\StdClassWrapper;
+namespace WishgranterProject\DescriptivePlaylist;
 
-class Header extends StdClassWrapper 
+use WishgranterProject\DescriptivePlaylist\Utils\StdClassWrapper;
+
+class Header extends StdClassWrapper
 {
     protected $schema = [
         'title' => [

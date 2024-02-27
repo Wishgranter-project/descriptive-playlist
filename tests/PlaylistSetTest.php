@@ -1,14 +1,15 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
-namespace AdinanCenci\DescriptivePlaylist\Tests;
+namespace WishgranterProject\DescriptivePlaylist\Tests;
 
-use AdinanCenci\DescriptivePlaylist\PlaylistItem;
-use AdinanCenci\DescriptivePlaylist\Playlist;
+use WishgranterProject\DescriptivePlaylist\PlaylistItem;
+use WishgranterProject\DescriptivePlaylist\Playlist;
 
 final class PlaylistSetTest extends Base
 {
-    public function testUpdateExistingItem() 
+    public function testUpdateExistingItem()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);
@@ -23,7 +24,7 @@ final class PlaylistSetTest extends Base
         $this->assertEquals('Nightfall ( updated )', $updatedItem->title);
     }
 
-    public function testMovingExisitingItem() 
+    public function testMovingExisitingItem()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);
@@ -38,7 +39,7 @@ final class PlaylistSetTest extends Base
         $this->assertEquals('Nightfall ( updated )', $newFirstItem->title);
     }
 
-    public function testSetNewItem() 
+    public function testSetNewItem()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);
@@ -55,7 +56,7 @@ final class PlaylistSetTest extends Base
         $this->assertEquals('Jungle Drums', $last->title);
     }
 
-    public function testSetNewItemAndInformItsPosition() 
+    public function testSetNewItemAndInformItsPosition()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);

@@ -1,5 +1,5 @@
 {
-    "name": "adinan-cenci/descriptive-playlist",
+    "name": "wishgranter-project/descriptive-playlist",
     "description": "A library to read and descriptive playlist format.", 
     "type": "library", 
     "keywords": ["json-lines", "json"], 
@@ -13,9 +13,9 @@
     ],
     "autoload": {
         "psr-4": {
-            "AdinanCenci\\DescriptivePlaylist\\": "src/",
-            "AdinanCenci\\DescriptivePlaylist\\Tests\\": "tests/",
-            "AdinanCenci\\DescriptivePlaylist\\Utils\\": "Utils/"
+            "WishgranterProject\\DescriptivePlaylist\\": "src/",
+            "WishgranterProject\\DescriptivePlaylist\\Tests\\": "tests/",
+            "WishgranterProject\\DescriptivePlaylist\\Utils\\": "Utils/"
         }
     },
     "require": {

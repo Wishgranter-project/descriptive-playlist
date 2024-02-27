@@ -1,10 +1,11 @@
-<?php 
-namespace AdinanCenci\DescriptivePlaylist;
+<?php
 
-use AdinanCenci\DescriptivePlaylist\Utils\Helpers;
-use AdinanCenci\DescriptivePlaylist\Utils\StdClassWrapper;
+namespace WishgranterProject\DescriptivePlaylist;
 
-class PlaylistItem extends StdClassWrapper 
+use WishgranterProject\DescriptivePlaylist\Utils\Helpers;
+use WishgranterProject\DescriptivePlaylist\Utils\StdClassWrapper;
+
+class PlaylistItem extends StdClassWrapper
 {
     protected $schema = [
         'uuid' => [
@@ -42,7 +43,7 @@ class PlaylistItem extends StdClassWrapper
         ],
     ];
 
-    public function __construct($data = null) 
+    public function __construct($data = null)
     {
         parent::__construct($data);
         if (! isset($this->uuid)) {
@@ -50,7 +51,7 @@ class PlaylistItem extends StdClassWrapper
         }
     }
 
-    public function generateUuid() : string
+    public function generateUuid(): string
     {
         return $this->uuid = Helpers::guidv4();
     }
@@ -59,7 +60,7 @@ class PlaylistItem extends StdClassWrapper
      * Creates a copy of the item, but with a new
      * uuid, obviously.
      */
-    public function createCopy() : PlaylistItem 
+    public function createCopy(): PlaylistItem
     {
         $copy = new PlaylistItem($this->getCopyOfTheData());
         $copy->generateUuid();
@@ -67,7 +68,7 @@ class PlaylistItem extends StdClassWrapper
         return $copy;
     }
 
-    public function isValid(&$errors = []) : bool
+    public function isValid(&$errors = []): bool
     {
         if (empty($this->title) && empty($this->album)) {
             $errors[] = 'Inform a title or an album';

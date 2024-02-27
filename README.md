@@ -1,11 +1,11 @@
 # Descriptive playlist
 
-A library to read and edit [Descriptive playlist files](https://github.com/adinan-cenci/descriptive-playlist-definition).
+A library to read and edit [Descriptive playlist files](https://github.com/wishgranter-project/descriptive-playlist-definition).
 
 ## Instantiating
 
 ```php
-use AdinanCenci\DescriptivePlaylist\Playlist;
+use WishgranterProject\DescriptivePlaylist\Playlist;
 $playlist = new Playlist('path-to/my-file.dpls');
 ```
 
@@ -59,14 +59,14 @@ $items = $playlist->getItemsByUuid(['ff81ea29-faa3-4523-8ddf-0da011a2a486', '008
 
 The object support several properties.
 
-A valid object must contain an uuid ( it generates one automatically ) and either an title or album properties.
+A valid object must contain an `uuid` ( it generates one automatically ) and either an title or album properties ( [see specifications](https://github.com/wishgranter-project/descriptive-playlist-definition/blob/master/technical-specifications.md) ).
 
 <br><br>
 
 ## Adding new items
 
 ```php
-use AdinanCenci\DescriptivePlaylist\PlaylistItem;
+use WishgranterProject\DescriptivePlaylist\PlaylistItem;
 
 $music = new PlaylistItem();
 $music->title = 'Nightfall';

@@ -1,15 +1,15 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
-namespace AdinanCenci\DescriptivePlaylist\Tests;
+namespace WishgranterProject\DescriptivePlaylist\Tests;
 
-use AdinanCenci\DescriptivePlaylist\PlaylistItem;
-use AdinanCenci\DescriptivePlaylist\Playlist;
+use WishgranterProject\DescriptivePlaylist\PlaylistItem;
+use WishgranterProject\DescriptivePlaylist\Playlist;
 
 final class PlaylistGetTest extends Base
 {
-
-    public function testGetSingleItem() 
+    public function testGetSingleItem()
     {
         $playlist = new Playlist('tests/template.dpls');
 
@@ -18,7 +18,7 @@ final class PlaylistGetTest extends Base
         $this->assertEquals('Over the hills and far away', $item->title);
     }
 
-    public function testGetMultipleItems() 
+    public function testGetMultipleItems()
     {
         $playlist = new Playlist('tests/template.dpls');
 
@@ -28,7 +28,7 @@ final class PlaylistGetTest extends Base
         $this->assertEquals('Nigraj kandeloj dancas', $items[2]->title);
     }
 
-    public function testGetNonExistingPosition() 
+    public function testGetNonExistingPosition()
     {
         $playlist = new Playlist('tests/template.dpls');
 
@@ -36,7 +36,7 @@ final class PlaylistGetTest extends Base
         $this->assertEquals(null, $item);
     }
 
-    public function testGetBlankLine() 
+    public function testGetBlankLine()
     {
         $playlist = new Playlist('tests/template.dpls');
 
@@ -45,7 +45,7 @@ final class PlaylistGetTest extends Base
         $this->assertEquals(null, $item);
     }
 
-    public function testGetLastItem() 
+    public function testGetLastItem()
     {
         $playlist = new Playlist('tests/template.dpls');
 
@@ -54,7 +54,7 @@ final class PlaylistGetTest extends Base
         $this->assertEquals('Over the hills and far away', $lastItem->title);
     }
 
-    public function testGetItemByUuid() 
+    public function testGetItemByUuid()
     {
         $playlist = new Playlist('tests/template.dpls');
 

@@ -1,14 +1,15 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
-namespace AdinanCenci\DescriptivePlaylist\Tests;
+namespace WishgranterProject\DescriptivePlaylist\Tests;
 
-use AdinanCenci\DescriptivePlaylist\PlaylistItem;
-use AdinanCenci\DescriptivePlaylist\Playlist;
+use WishgranterProject\DescriptivePlaylist\PlaylistItem;
+use WishgranterProject\DescriptivePlaylist\Playlist;
 
 final class PlaylistDeleteTest extends Base
 {
-    public function testDeleteItem() 
+    public function testDeleteItem()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);
@@ -22,7 +23,7 @@ final class PlaylistDeleteTest extends Base
         $this->assertEquals($newThird->title, 'If I could Fly');
     }
 
-    public function testDeletePosition() 
+    public function testDeletePosition()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);

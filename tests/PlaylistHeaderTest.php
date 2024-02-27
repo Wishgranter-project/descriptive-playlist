@@ -1,14 +1,15 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
-namespace AdinanCenci\DescriptivePlaylist\Tests;
+namespace WishgranterProject\DescriptivePlaylist\Tests;
 
-use AdinanCenci\DescriptivePlaylist\PlaylistItem;
-use AdinanCenci\DescriptivePlaylist\Playlist;
+use WishgranterProject\DescriptivePlaylist\PlaylistItem;
+use WishgranterProject\DescriptivePlaylist\Playlist;
 
 final class PlaylistHeaderTest extends Base
 {
-    public function testSetHeaderTitle() 
+    public function testSetHeaderTitle()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file, '');
@@ -20,7 +21,7 @@ final class PlaylistHeaderTest extends Base
         $this->assertEquals('Playlist title', $playlist->title);
     }
 
-    public function testSetHeaderDescription() 
+    public function testSetHeaderDescription()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file, '');
@@ -32,7 +33,7 @@ final class PlaylistHeaderTest extends Base
         $this->assertEquals('Playlist description', $playlist->description);
     }
 
-    public function testReadHeader() 
+    public function testReadHeader()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);
@@ -43,7 +44,7 @@ final class PlaylistHeaderTest extends Base
         $this->assertEquals('test description', $playlist->description);
     }
 
-    public function testSetCustomProperty() 
+    public function testSetCustomProperty()
     {
         $file = 'tests/files/' . __FUNCTION__ . '.dpls';
         $this->resetTest($file);

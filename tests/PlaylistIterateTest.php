@@ -1,14 +1,15 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
-namespace AdinanCenci\DescriptivePlaylist\Tests;
+namespace WishgranterProject\DescriptivePlaylist\Tests;
 
-use AdinanCenci\DescriptivePlaylist\PlaylistItem;
-use AdinanCenci\DescriptivePlaylist\Playlist;
+use WishgranterProject\DescriptivePlaylist\PlaylistItem;
+use WishgranterProject\DescriptivePlaylist\Playlist;
 
 final class PlaylistIterateTest extends Base
 {
-    public function testIterating() 
+    public function testIterating()
     {
         $playlist = new Playlist('tests/template.dpls');
 

@@ -1,19 +1,20 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
-namespace AdinanCenci\DescriptivePlaylist\Tests;
+namespace WishgranterProject\DescriptivePlaylist\Tests;
 
-use AdinanCenci\DescriptivePlaylist\PlaylistItem;
+use WishgranterProject\DescriptivePlaylist\PlaylistItem;
 
 final class PlaylistItemTest extends Base
 {
-    public function testCreateMusicFromInvalidJson() 
+    public function testCreateMusicFromInvalidJson()
     {
         $item = PlaylistItem::createFromJson('{"uuid":"123","title":"fuuuuuuuuck}');
         $this->assertEquals(null, $item);
     }
 
-    public function testValideteUuid() 
+    public function testValideteUuid()
     {
         $item = new PlaylistItem();
 
@@ -27,7 +28,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals([], $errors);
     }
 
-    public function testValideteTitle() 
+    public function testValideteTitle()
     {
         $item = new PlaylistItem();
 
@@ -44,7 +45,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals([], $errors);
     }
 
-    public function testValideteArtist() 
+    public function testValideteArtist()
     {
         $item = new PlaylistItem();
 
@@ -58,7 +59,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals([], $errors);
     }
 
-    public function testValideteFeaturing() 
+    public function testValideteFeaturing()
     {
         $item = new PlaylistItem();
 
@@ -72,7 +73,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals([], $errors);
     }
 
-    public function testValideteCover() 
+    public function testValideteCover()
     {
         $item = new PlaylistItem();
 
@@ -86,7 +87,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals(['cover should be of the types: string'], $errors);
     }
 
-    public function testValideteAlbum() 
+    public function testValideteAlbum()
     {
         $item = new PlaylistItem();
 
@@ -100,7 +101,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals(['album should be of the types: string'], $errors);
     }
 
-    public function testValideteSoundtrack() 
+    public function testValideteSoundtrack()
     {
         $item = new PlaylistItem();
 
@@ -114,7 +115,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals([], $errors);
     }
 
-    public function testValideteGenre() 
+    public function testValideteGenre()
     {
         $item = new PlaylistItem();
 
@@ -128,7 +129,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals([], $errors);
     }
 
-    public function testAddInvalidCustomProperty() 
+    public function testAddInvalidCustomProperty()
     {
         $item = new PlaylistItem();
 
@@ -136,7 +137,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals(['unrecognized randomNonsense property'], $errors);
     }
 
-    public function testAddCustomProperty() 
+    public function testAddCustomProperty()
     {
         $item = new PlaylistItem();
 
@@ -159,7 +160,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals([], $errors);
     }
 
-    public function testValidPlaylistItem() 
+    public function testValidPlaylistItem()
     {
         $item = new PlaylistItem();
         $item->title = 'title';
@@ -175,7 +176,7 @@ final class PlaylistItemTest extends Base
         $this->assertEquals(['Inform a title or an album'], $errors);
     }
 
-    public function testSanitizeData() 
+    public function testSanitizeData()
     {
         $json = '{"title":["title","cant","be","array"],"cover":["neither","can","cover"],"uuid":"c6a8d990-acec-4be2-bb98-0022c3294c00"}';
         $item = PlaylistItem::createFromJson($json);
@@ -193,7 +194,7 @@ final class PlaylistItemTest extends Base
         $this->assertTrue($item->isValid());
     }
 
-    public function testCreateCopy() 
+    public function testCreateCopy()
     {
         $json = '{"title":"test title","artist":"some random","uuid":"c6a8d990-acec-4be2-bb98-0022c3294c00"}';
         $original = PlaylistItem::createFromJson($json);

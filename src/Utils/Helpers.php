@@ -1,9 +1,10 @@
-<?php 
-namespace AdinanCenci\DescriptivePlaylist\Utils;
+<?php
 
-class Helpers 
+namespace WishgranterProject\DescriptivePlaylist\Utils;
+
+class Helpers
 {
-    public static function guidv4($data = null) : string
+    public static function guidv4($data = null): string
     {
         // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
         $data = $data ?? random_bytes(16);
@@ -18,7 +19,7 @@ class Helpers
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
-    public static function is($data, string $expectedType) : bool
+    public static function is($data, string $expectedType): bool
     {
         if ($expectedType == 'string[]') {
             return self::isArrayOf($data, 'is_string');
@@ -48,7 +49,7 @@ class Helpers
     }
 
 
-    public static function isArrayOf($data, $function) : bool
+    public static function isArrayOf($data, $function): bool
     {
         if (! is_array($data)) {
             return false;
@@ -64,7 +65,7 @@ class Helpers
     }
 
 
-    public static function isAlphanumeric($data) : bool
+    public static function isAlphanumeric($data): bool
     {
         return is_string($data) || is_numeric($data);
     }

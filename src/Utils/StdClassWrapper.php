@@ -1,10 +1,11 @@
-<?php 
-namespace AdinanCenci\DescriptivePlaylist\Utils;
+<?php
+
+namespace WishgranterProject\DescriptivePlaylist\Utils;
 
 /**
  * A class to wrap around a \stdClass and provide basic validation.
  */
-abstract class StdClassWrapper 
+abstract class StdClassWrapper
 {
     protected \stdClass $data;
 
@@ -27,43 +28,43 @@ abstract class StdClassWrapper
         ]
     ];
 
-    public function __construct($data = null) 
+    public function __construct($data = null)
     {
         if ($data === null) {
             $this->data = new \stdClass();
-        } else if ($data instanceof \stdClass) {
+        } elseif ($data instanceof \stdClass) {
             $this->data = $data;
         } else {
             throw new \InvalidArgumentException('Inform an object');
         }
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return json_encode($this->data);
     }
 
-    public function __set($property, $value) : void
+    public function __set($property, $value): void
     {
         $this->setProperty($property, $value);
     }
 
-    public function __unset($property) : void 
+    public function __unset($property): void
     {
         unset($this->data->{$property});
     }
 
-    public function __get($propertyName) 
+    public function __get($propertyName)
     {
         return $this->getProperty($propertyName);
     }
 
-    public function __isset($propertyName) : bool
+    public function __isset($propertyName): bool
     {
         return !empty($this->data->{$propertyName});
     }
 
-    public function isValid(&$errors = []) : bool
+    public function isValid(&$errors = []): bool
     {
         $errors = (array) $errors;
         if (! $this->requiredPropertiesAreSet($missingProperties)) {
@@ -78,7 +79,7 @@ abstract class StdClassWrapper
         return count($errors) == 0;
     }
 
-    public function isValidProperty($propertyName, $value, &$errors = []) : bool
+    public function isValidProperty($propertyName, $value, &$errors = []): bool
     {
         return $this->validateProperty($propertyName, $value, $errors);
     }
@@ -89,12 +90,11 @@ abstract class StdClassWrapper
      * It unsets invalid or empty properties and transforms
      * one-item-long arrays into strings/numbers ( when applicable ).
      */
-    public function sanitize() : void
+    public function sanitize(): void
     {
         foreach ($this->data as $propertyName => $propertyValue) {
             if (is_array($propertyValue)) {
-                $propertyValue = array_filter($propertyValue, function($i) 
-                {
+                $propertyValue = array_filter($propertyValue, function ($i) {
                     return !empty($i) || $i === 0 || $i === '0';
                 });
                 $propertyValue = array_values($propertyValue);
@@ -121,10 +121,10 @@ abstract class StdClassWrapper
 
     /**
      * Clears the stdClass object of all properties $exceptFor the ones specified.
-     * 
+     *
      * @param string[] $exceptFor
      */
-    public function empty($exceptFor = []) : void
+    public function empty($exceptFor = []): void
     {
         foreach ($this->data as $prp => $v) {
             if (!in_array($prp, $exceptFor)) {
@@ -136,19 +136,19 @@ abstract class StdClassWrapper
     /**
      * Returns a copy of the stdClass.
      */
-    public function getCopyOfTheData() : \stdClass
+    public function getCopyOfTheData(): \stdClass
     {
         return clone $this->data;
     }
 
-    public function getProperty(string $propertyName) 
+    public function getProperty(string $propertyName)
     {
         return isset($this->data->{$propertyName})
             ? $this->data->{$propertyName}
             : null;
     }
 
-    public function setProperty(string $propertyName, $propertyValue) : void
+    public function setProperty(string $propertyName, $propertyValue): void
     {
         if ($this->validateProperty($propertyName, $propertyValue, $errors)) {
             $this->data->{$propertyName} = $propertyValue;
@@ -161,7 +161,7 @@ abstract class StdClassWrapper
     /**
      * @return string[]
      */
-    public function getSetPropertiesNames() : array
+    public function getSetPropertiesNames(): array
     {
         return array_keys(get_object_vars($this->data));
     }
@@ -170,7 +170,7 @@ abstract class StdClassWrapper
      * @param string[] &$missingProperties Return the name of the properties that should be set but are not.
      * @return bool
      */
-    public function requiredPropertiesAreSet(&$missingProperties) : bool
+    public function requiredPropertiesAreSet(&$missingProperties): bool
     {
         $missingProperties = [];
 
@@ -186,25 +186,24 @@ abstract class StdClassWrapper
     /**
      * @return string[]
      */
-    public function getRequeridProperties() : array
+    public function getRequeridProperties(): array
     {
-        return array_filter($this->schema, function($item) 
-        {
+        return array_filter($this->schema, function ($item) {
             return isset($item['required']) && $item['required'];
         });
     }
 
-    public function isValidPropertyName(string $propertyName) : bool
+    public function isValidPropertyName(string $propertyName): bool
     {
         return $this->isCanonicalProperty($propertyName) || $this->isValidCustomPropertyName($propertyName);
     }
 
-    public function isValidCustomPropertyName(string $propertyName) : bool
+    public function isValidCustomPropertyName(string $propertyName): bool
     {
         return preg_match('/xxx[\w]{1,100}$/', $propertyName);
     }
 
-    public function isCanonicalProperty(string $propertyName) : bool
+    public function isCanonicalProperty(string $propertyName): bool
     {
         return in_array($propertyName, $this->getCanonicalProperties());
     }
@@ -212,34 +211,39 @@ abstract class StdClassWrapper
     /**
      * @return string[]
      */
-    public function getCanonicalProperties() : array
+    public function getCanonicalProperties(): array
     {
         return array_keys($this->schema);
     }
 
-    protected function validateProperty(string $propertyName, $propertyValue, &$errors = []) : bool
+    protected function validateProperty(string $propertyName, $propertyValue, &$errors = []): bool
     {
         $errors = [];
         if ($this->isCanonicalProperty($propertyName)) {
-
-            return $this->validateCanonicalProperty($propertyName, $propertyValue, $errors);
-
-        } else if ($this->isValidCustomPropertyName($propertyName)) {
-
-            return $this->validateCustomProperty($propertyName, $propertyValue, $errors);
-
+            return $this->validateCanonicalProperty(
+                $propertyName,
+                $propertyValue,
+                $errors
+            );
+        } elseif ($this->isValidCustomPropertyName($propertyName)) {
+            return $this->validateCustomProperty(
+                $propertyName,
+                $propertyValue,
+                $errors
+            );
         } else {
-
             $errors[] = 'unrecognized ' . $propertyName . ' property';
             return false;
-
         }
     }
 
-    protected function validateCanonicalProperty(string $propertyName, $propertyValue, &$errors = []) : bool
-    {;
+    protected function validateCanonicalProperty(string $propertyName, $propertyValue, &$errors = []): bool
+    {
         $errors = [];
-        $rules = array_filter($this->schema[$propertyName], function($r) { return $r != 'required'; });
+        $rules = array_filter($this->schema[$propertyName], function ($r) {
+            return $r != 'required';
+        });
+
         foreach ($rules as $rule) {
             if (! $this->validateRule($propertyName, $propertyValue, $er, $rule)) {
                 $errors[] = $er;
@@ -249,7 +253,7 @@ abstract class StdClassWrapper
         return count($errors) == 0;
     }
 
-    protected function validateCustomProperty(string $propertyName, $propertyValue, &$errors = []) : bool
+    protected function validateCustomProperty(string $propertyName, $propertyValue, &$errors = []): bool
     {
         $this->validateRule($propertyName, $propertyValue, $error, 'is:null|alphanumeric|alphanumeric[]');
         $this->validateRule($propertyName, $propertyValue, $error, 'maxLength:255');
@@ -264,14 +268,13 @@ abstract class StdClassWrapper
      * @param string $rule
      * @return bool
      */
-    protected function validateRule(string $propertyName, $propertyValue, &$error, string $rule) : bool
+    protected function validateRule(string $propertyName, $propertyValue, &$error, string $rule): bool
     {
         $error = '';
         $parameters = explode(':', $rule);
         $method = array_shift($parameters);
 
-        array_walk($parameters, function(&$p) 
-        {
+        array_walk($parameters, function (&$p) {
             $p = substr_count($p, '|') ? explode('|', $p) : $p;
         });
 
@@ -284,13 +287,13 @@ abstract class StdClassWrapper
 
     /**
      * Validating function. Returns an error message.
-     * 
+     *
      * @param string $propertyName
      * @param mixed $propertyValue
      * @param int $maxLength
      * @return string
      */
-    protected function maxLength($propertyName, $propertyValue, $maxLength) : string
+    protected function maxLength($propertyName, $propertyValue, $maxLength): string
     {
         if ($this->strLength($propertyValue) > $maxLength) {
             return $propertyName . ' should not be longer than ' . $maxLength . ' characters';
@@ -301,13 +304,13 @@ abstract class StdClassWrapper
 
     /**
      * Validating function. Returns an error message.
-     * 
+     *
      * @param string $propertyName
      * @param mixed $propertyValue
      * @param int $length
      * @return string
      */
-    protected function length(string $propertyName, $propertyValue, $length) : string
+    protected function length(string $propertyName, $propertyValue, $length): string
     {
         if ($this->strLength($propertyValue) != $length) {
             return $propertyName . ' should be ' . $length . ' characters long';
@@ -318,13 +321,13 @@ abstract class StdClassWrapper
 
     /**
      * Validating function. Returns an error message.
-     * 
+     *
      * @param string $propertyName
      * @param mixed $propertyValue
      * @param string|string[] $types
      * @return string
      */
-    protected function is(string $propertyName, $propertyValue, $types) : string
+    protected function is(string $propertyName, $propertyValue, $types): string
     {
         $types = (array) $types;
         foreach ($types as $type) {
@@ -340,17 +343,17 @@ abstract class StdClassWrapper
      * @param string|array
      * @return int
      */
-    protected function strLength($data) : int
+    protected function strLength($data): int
     {
         $length = 0;
-        foreach((array) $data as $str) {
+        foreach ((array) $data as $str) {
             $length += strlen($str);
         }
 
         return $length;
     }
 
-    public static function createFromJson($json) 
+    public static function createFromJson($json)
     {
         if ($json === null) {
             return null;
