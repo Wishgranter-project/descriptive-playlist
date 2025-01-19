@@ -247,6 +247,8 @@ $search = $file->search();
 $search->orderBy('title', 'ASC');
 ```
 
+<br><br>
+
 ## Licence
 
 MIT
