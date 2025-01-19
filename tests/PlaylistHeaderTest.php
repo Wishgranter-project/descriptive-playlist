@@ -15,10 +15,12 @@ final class PlaylistHeaderTest extends Base
         $this->resetTest($file, '');
 
         $playlist = new Playlist($file);
-        $playlist->title = 'Playlist title';
+        $header = $playlist->getHeader();
+        $header->title = 'Playlist title';
+        $playlist->setHeader($header);
 
         $anotherPlaylist = new Playlist($file);
-        $this->assertEquals('Playlist title', $playlist->title);
+        $this->assertEquals('Playlist title', $playlist->header->title);
     }
 
     public function testSetHeaderDescription()
@@ -27,10 +29,12 @@ final class PlaylistHeaderTest extends Base
         $this->resetTest($file, '');
 
         $playlist = new Playlist($file);
-        $playlist->description = 'Playlist description';
+        $header = $playlist->getHeader();
+        $header->description = 'Playlist description';
+        $playlist->setHeader($header);
 
         $anotherPlaylist = new Playlist($file);
-        $this->assertEquals('Playlist description', $playlist->description);
+        $this->assertEquals('Playlist description', $playlist->header->description);
     }
 
     public function testReadHeader()
@@ -40,8 +44,8 @@ final class PlaylistHeaderTest extends Base
 
         $playlist = new Playlist($file);
 
-        $this->assertEquals('Template for tests', $playlist->title);
-        $this->assertEquals('test description', $playlist->description);
+        $this->assertEquals('Template for tests', $playlist->header->title);
+        $this->assertEquals('test description', $playlist->header->description);
     }
 
     public function testSetCustomProperty()
@@ -50,10 +54,12 @@ final class PlaylistHeaderTest extends Base
         $this->resetTest($file);
 
         $playlist = new Playlist($file);
-        $playlist->xxxCustomProperty = 'test';
+        $header = $playlist->getHeader();
+        $header->xxxCustomProperty = 'test';
+        $playlist->setHeader($header);
 
         $anotherPlaylist = new Playlist($file);
 
-        $this->assertEquals('test', $anotherPlaylist->xxxCustomProperty);
+        $this->assertEquals('test', $anotherPlaylist->header->xxxCustomProperty);
     }
 }

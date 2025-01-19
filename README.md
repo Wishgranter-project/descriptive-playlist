@@ -240,6 +240,13 @@ $results = $search->find();
 
 <br><br>
 
+### Order results
+
+```php
+$search = $file->search();
+$search->orderBy('title', 'ASC');
+```
+
 ## Licence
 
 MIT

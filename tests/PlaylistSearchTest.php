@@ -54,4 +54,18 @@ final class PlaylistSearchTest extends Base
         $this->assertEquals('Lazy Day Blues', $items[0]->title);
         $this->assertEquals('Nigraj kandeloj dancas', $items[2]->title);
     }
+
+    public function testSearchOrderResults()
+    {
+        $playlist = new Playlist('tests/template.dpls');
+        $search = $playlist->search();
+        $search->orderBy('title', 'ASC');
+        $items = $search->find();
+
+        $first = reset($items);
+        $last = end($items);
+
+        $this->assertEquals('If I could Fly', $first->title);
+        $this->assertEquals('The Bard\'s Song The Hobbit', $last->title);
+    }
 }

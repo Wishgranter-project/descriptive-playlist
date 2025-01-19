@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "284c5cdc9e0f8fafdd1800cf00f757bb",
+    "content-hash": "6c10d7315fa41f59e200c11c85a12311",
     "packages": [
         {
             "name": "adinan-cenci/file-editor",
-            "version": "v1.1.1",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adinan-cenci/file-editor.git",
-                "reference": "e30c62d1c3b1496412245aaf6466d2c88b6f0071"
+                "reference": "23eac79aeb520100510531d74ddbd9d2581309c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adinan-cenci/file-editor/zipball/e30c62d1c3b1496412245aaf6466d2c88b6f0071",
-                "reference": "e30c62d1c3b1496412245aaf6466d2c88b6f0071",
+                "url": "https://api.github.com/repos/adinan-cenci/file-editor/zipball/23eac79aeb520100510531d74ddbd9d2581309c7",
+                "reference": "23eac79aeb520100510531d74ddbd9d2581309c7",
                 "shasum": ""
             },
             "require": {
@@ -48,26 +48,26 @@
             "description": "A library to read and write files.",
             "support": {
                 "issues": "https://github.com/adinan-cenci/file-editor/issues",
-                "source": "https://github.com/adinan-cenci/file-editor/tree/v1.1.1"
+                "source": "https://github.com/adinan-cenci/file-editor/tree/v2.0.0"
             },
-            "time": "2023-07-22T14:29:54+00:00"
+            "time": "2025-01-19T22:34:13+00:00"
         },
         {
             "name": "adinan-cenci/json-lines",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adinan-cenci/json-lines.git",
-                "reference": "efde33249c776684c7cfff78c4945dde32eedf5e"
+                "reference": "6b509d8b290fe4c3b78dde6de02895977a02d879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adinan-cenci/json-lines/zipball/efde33249c776684c7cfff78c4945dde32eedf5e",
-                "reference": "efde33249c776684c7cfff78c4945dde32eedf5e",
+                "url": "https://api.github.com/repos/adinan-cenci/json-lines/zipball/6b509d8b290fe4c3b78dde6de02895977a02d879",
+                "reference": "6b509d8b290fe4c3b78dde6de02895977a02d879",
                 "shasum": ""
             },
             "require": {
-                "adinan-cenci/file-editor": "^1.1",
+                "adinan-cenci/file-editor": "^2.0",
                 "php": ">=7.0"
             },
             "require-dev": {
@@ -101,9 +101,9 @@
             ],
             "support": {
                 "issues": "https://github.com/adinan-cenci/json-lines/issues",
-                "source": "https://github.com/adinan-cenci/json-lines/tree/v3.0.0"
+                "source": "https://github.com/adinan-cenci/json-lines/tree/v3.1.0"
             },
-            "time": "2023-07-22T10:31:10+00:00"
+            "time": "2025-01-19T22:54:52+00:00"
         }
     ],
     "packages-dev": [

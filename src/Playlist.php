@@ -4,19 +4,44 @@ namespace WishgranterProject\DescriptivePlaylist;
 
 use AdinanCenci\JsonLines\JsonLines;
 
+/**
+ * @property \Iterator $items
+ *   Iterator object to read the playlist item by item.
+ * @property string $fileName
+ *   The filename.
+ * @property int $lineCount
+ *   The number of lines in the file.
+ */
 class Playlist
 {
+    /**
+     * @var AdinanCenci\JsonLines\JsonLines
+     *   Json lines object.
+     */
     protected JsonLines $jsonLines;
 
+    /**
+     * Constructor.
+     *
+     * @param string $fileName
+     *   Absolute path to the file.
+     */
     public function __construct(string $fileName)
     {
         $this->jsonLines = new JsonLines($fileName);
     }
 
+    /**
+     * Return read only properties.
+     *
+     * @param string $propertyName
+     *   Property name.
+     */
     public function __get($var)
     {
         switch ($var) {
             case 'fileName':
+            case 'filename':
                 return $this->jsonLines->fileName;
                 break;
             case 'lineCount':
@@ -25,27 +50,31 @@ class Playlist
             case 'items':
                 return new PlaylistIterator($this->jsonLines->objects);
                 break;
-            default:
-                $header = $this->getHeader();
-                return $header->{$var};
+            case 'header':
+                return $this->getHeader();
                 break;
         }
     }
 
     public function __set($var, $value)
     {
+        if ($var == 'header') {
+            $this->setHeader($value);
+        }
+
         if (in_array($var, ['fileName', 'lineCount', 'items'])) {
             throw new \InvalidArgumentException($var . ' is ready only.');
         }
-
-        $header = $this->getHeader();
-        $header->{$var} = $value;
-        $this->setHeader($header);
     }
 
     /**
-     * @param bool &$emptyLastLine, it returns true if the last line of the file is empty.
+     * Counts how many lines the file has.
+     *
+     * @param bool &$lastLineEmpty
+     *   Turns true if the last line of the file is empty.
+     *
      * @return int
+     *   The number of lines in the file.
      */
     public function countLines(&$lastLineEmpty): int
     {
@@ -56,24 +85,26 @@ class Playlist
      * Returns the last NON-BLANK line of the file.
      *
      * @return int
+     *   The last line.
      */
     public function getLastLine(): int
     {
         $line = $this->countLines($lastLineEmpty);
-        $line -= $lastLineEmpty && $line > 0 ? 1 : 0;
+        $line -= $lastLineEmpty && $line > 0
+            ? 1
+            : 0;
         return $line;
     }
 
-    //------------------------------------------
-
     /**
-     * Returns a Search object.
+     * Instantiates a new search object.
      *
-     * @param string $operator Possible values: "AND", "OR".
-     * If OR is used, only one of the following conditions must be met.
-     * If AND is used, all of the conditions must be met.
-     * See the Search for more information.
-     * @return Search
+     * @param string $operator
+     *   The operator to with wich avaliate the search conditions:
+     *   "AND" or "OR".
+     *
+     * @return AdinanCenci\FileEditor\Search\Search
+     *   The search object.
      */
     public function search(string $operator = 'AND'): Search
     {
@@ -81,11 +112,13 @@ class Playlist
     }
 
     /**
-     * Returns the PlaylistItem in $position.
-     * Returns null if there is nothing at that position.
+     * Returns the PlaylistItem at the specified $position.
      *
      * @param int $position
+     *   The position within the playlist.
+     *
      * @return PlaylistItem|null
+     *   The item at $position, null if there is nothing there.
      */
     public function getItem(int $position): ?PlaylistItem
     {
@@ -97,11 +130,16 @@ class Playlist
     }
 
     /**
-     * Based on $positions, it will return return an array of PlaylistItem.
-     * objects or nulls, if there is nothing on the specified position.
+     * Retrieves the playlist at the specified $positions.
      *
      * @param int[] $positions
-     * @param (PlaylistItem|null)[]
+     *   An array of positions.
+     *
+     * @return (WishgranterProject\DescriptivePlaylist\PlaylistItem|null)[]
+     *   The items at the specified positions.
+     *
+     * @throws FileDoesNotExist
+     * @throws FileIsNotReadable
      */
     public function getItems(array $positions): array
     {
@@ -128,9 +166,13 @@ class Playlist
     }
 
     /**
-     * Returns the last PlaylistItem on the playlist, null if it is empty.
+     * Returns the last PlaylistItem on the playlist.
      *
-     * @return PlaylistItem|null
+     * @param int &$position
+     *   Turns into the position of the last item in the playlist.
+     *
+     * @return WishgranterProject\DescriptivePlaylist\PlaylistItem|null
+     *   The last item in the playlist, null if the line is empty.
      */
     public function getLastItem(&$index = 0): ?PlaylistItem
     {
@@ -146,8 +188,13 @@ class Playlist
     }
 
     /**
+     * Retrieves playlist items with the specified uuids.
+     *
      * @param string[] $uuids
-     * @return (PlaylistItem|null)[]
+     *   An array of unique ids.
+     *
+     * @return (WishgranterProject\DescriptivePlaylist\PlaylistItem|null)[]
+     *   The playlist items indexed by their position in the file.
      */
     public function getItemsByUuid(array $uuids): array
     {
@@ -172,10 +219,15 @@ class Playlist
     }
 
     /**
+     * Retrieves the playlist item with the specified uuid.
+     *
      * @param string $uuid
-     * @param int &$position It will return the item's corresponding position in the playlist.
-     * It will return -1 if the item is not in the playlist.
-     * @return PlaylistItem|null
+     *   An unique id.
+     * @param int &$position
+     *   It will turn into the item's corresponding position in the playlist.
+     *   Turns into -1 if the item is not in the playlist.
+     *
+     * @return WishgranterProject\DescriptivePlaylist\PlaylistItem|null
      */
     public function getItemByUuid(string $uuid, &$position = -1): ?PlaylistItem
     {
@@ -193,10 +245,16 @@ class Playlist
     }
 
     /**
-     * @param PlaylistItem $item
-     * @param int &$position It will return the item's corresponding position in the playlist.
-     * It will return -1 if the item is not in the playlist.
-     * @return PlaylistItem|null
+     * Checks if the specified item is in the playlist.
+     *
+     * @param WishgranterProject\DescriptivePlaylist\PlaylistItem $item
+     *   The item we are checking.
+     * @param int &$position
+     *   Will turn into the item's corresponding position in the playlist.
+     *   Turns into -1 if the item is not in the playlist.
+     *
+     * @return bool
+     *   True if the item is in the playlist.
      */
     public function hasItem(PlaylistItem $item, &$position = -1): bool
     {
@@ -209,10 +267,44 @@ class Playlist
         return (bool) $this->getItemByUuid($item->uuid, $position);
     }
 
-    //------------------------------------------
+    /**
+     * Retrieves random playlist items.
+     *
+     * @param int $count
+     *   How many lines to return.
+     * @param int|null $from
+     *   Limits the pool of lines available.
+     * @param int|null $to
+     *   Limits the pool of lines available.
+     *
+     * @return WishgranterProject\DescriptivePlaylist\PlaylistItem[]
+     *   The items we retrieved.
+     */
+    public function getRandomItems(int $count, ?int $from = null, ?int $to = null): array
+    {
+        $from    = is_null($from) ? 1 : $from + 1;
+        $objects = $this->jsonLines->getRandomObjects($count, $from, $to);
+        $items   = [];
+
+        foreach ($objects as $line => $object) {
+            $items[ $line + 1 ] = new PlaylistItem($content);
+        }
+
+        return $items;
+    }
 
     /**
-     * Updates the item and changes it from place.
+     * Updates the item and changes its position within the file.
+     *
+     * @param WishgranterProject\DescriptivePlaylist\PlaylistItem $item
+     *   The item to update.
+     * @param int $newPosition
+     *   If provided, the $item will be moved to this new position.
+     *   If not, the item will be left in its current position.
+     *   If the item is new to the playlist and the position is not provided,
+     *   the item will be added to the end of the file.
+     *
+     * @return bool
      */
     public function setItem(PlaylistItem $item, ?int $newPosition = null): bool
     {
@@ -222,7 +314,6 @@ class Playlist
         }
 
         $alreadyExists = $this->hasItem($item, $currentPosition);
-
         if ($alreadyExists) {
             // Delete from current position.
             $this->jsonLines->deleteObject($currentPosition + 1);
@@ -244,15 +335,14 @@ class Playlist
         return true;
     }
 
-    //------------------------------------------
-
     /**
      * Deletes a PlaylistItem from the playlist.
      *
-     * It returns false if the item is not in the playlist.
+     * @param WishgranterProject\DescriptivePlaylist\PlaylistItem $item
+     *   The item to be deleted.
      *
-     * @param PlaylistItem $item
      * @return bool
+     *   False if the item is not in the playlist to begin with.
      */
     public function deleteItem(PlaylistItem $item): bool
     {
@@ -265,12 +355,15 @@ class Playlist
     }
 
     /**
-     * Delete item at the specified position.
-     * Returns false if there is nothing at the specified position.
+     * Deletes the playlist item at the specified position.
      *
      * @param int $position
-     * @param PlaylistItem|null $item Return the removed item.
+     *   The position withing the playlist.
+     * @param WishgranterProject\DescriptivePlaylist\PlaylistItem|null $item
+     *   Turns into the item at $position.
+     *
      * @return bool
+     *   False if there is nothing at the specified position to begin with.
      */
     public function deletePosition(int $position, &$item = null): bool
     {
@@ -282,10 +375,11 @@ class Playlist
         return false;
     }
 
-    //------------------------------------------
-
     /**
-     * @return Header
+     * Returns an object representing the header of the file.
+     *
+     * @return WishgranterProject\DescriptivePlaylist\Header
+     *   The header object.
      */
     public function getHeader(): Header
     {
@@ -303,7 +397,11 @@ class Playlist
     }
 
     /**
-     * @param Header $header
+     * Updates the header of the file.
+     *
+     * @param WishgranterProject\DescriptivePlaylist\Header $header
+     *   The object representing the header of the file.
+     *
      * @return void
      */
     public function setHeader(Header $header): void

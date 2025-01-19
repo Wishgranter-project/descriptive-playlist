@@ -7,7 +7,7 @@ use WishgranterProject\DescriptivePlaylist\Utils\StdClassWrapper;
 
 class PlaylistItem extends StdClassWrapper
 {
-    protected $schema = [
+    protected array $schema = [
         'uuid' => [
             'required',
             'is:string',
@@ -43,6 +43,9 @@ class PlaylistItem extends StdClassWrapper
         ],
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct($data = null)
     {
         parent::__construct($data);
@@ -51,14 +54,22 @@ class PlaylistItem extends StdClassWrapper
         }
     }
 
+    /**
+     * Generates an uuid for the object.
+     *
+     * @return string
+     *   uuid string.
+     */
     public function generateUuid(): string
     {
         return $this->uuid = Helpers::guidv4();
     }
 
     /**
-     * Creates a copy of the item, but with a new
-     * uuid, obviously.
+     * Creates a copy of the item.
+     *
+     * @param WishgranterProject\DescriptivePlaylist\PlaylistItem
+     *   Copy of the playlist with its on uuid.
      */
     public function createCopy(): PlaylistItem
     {
@@ -68,6 +79,9 @@ class PlaylistItem extends StdClassWrapper
         return $copy;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isValid(&$errors = []): bool
     {
         if (empty($this->title) && empty($this->album)) {

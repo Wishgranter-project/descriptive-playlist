@@ -4,6 +4,14 @@ namespace WishgranterProject\DescriptivePlaylist\Utils;
 
 class Helpers
 {
+    /**
+     * Generates an uuid v4 string.
+     *
+     * @param string $data
+     *   Data to generate the uuid.
+     * @return string
+     *   An uuid.
+     */
     public static function guidv4($data = null): string
     {
         // Generate 16 bytes (128 bits) of random data or use the data passed into the function.

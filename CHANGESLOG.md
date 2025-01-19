@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.0.0] - 2025-01-19
+### Removed
+- No longer can edit the header's properties with `Playlist::__set()` or retrieve them with `Playlist::__get()`.
+
+### Added
+- Added `Playlist::getRandomItems()`.
+- Added `Search::orderBy()`.
+
+---
+
 ## [5.0.0] - 2024-02-27
 ### Changed
 - Renamed the package to `wishgranter-project/descriptive-playlist` and namespace to `WishgranterProject\DescriptivePlaylist`.
