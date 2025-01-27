@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.0] - 2025-01-27
+### Added
+- Added `Search::orderRandomly()`.
+
+---
+
 ## [6.0.0] - 2025-01-19
 ### Removed
 - No longer can edit the header's properties with `Playlist::__set()` or retrieve them with `Playlist::__get()`.

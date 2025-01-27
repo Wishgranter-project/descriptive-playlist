@@ -113,4 +113,20 @@ class Search
         $this->search->orderBy($property, $direction);
         return $this;
     }
+
+    /**
+     * Adds a new criteria to order the results randomly.
+     *
+     * @param null|string $seed
+     *   If informed, the seed will be used to order the results.
+     *   The items will be order the same every time.
+     *
+     * @return WishgranterProject\DescriptivePlaylist\Search
+     *   Return itself.
+     */
+    public function orderRandomly(?string $seed = null): Search
+    {
+        $this->search->orderRandomly($seed);
+        return $this;
+    }
 }

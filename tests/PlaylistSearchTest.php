@@ -55,7 +55,7 @@ final class PlaylistSearchTest extends Base
         $this->assertEquals('Nigraj kandeloj dancas', $items[2]->title);
     }
 
-    public function testSearchOrderResults()
+    public function testSearchOrderResultsByProperty()
     {
         $playlist = new Playlist('tests/template.dpls');
         $search = $playlist->search();
@@ -67,5 +67,36 @@ final class PlaylistSearchTest extends Base
 
         $this->assertEquals('If I could Fly', $first->title);
         $this->assertEquals('The Bard\'s Song The Hobbit', $last->title);
+    }
+
+    public function testSearchOrderResultsRandomly()
+    {
+        $playlist = new Playlist('tests/template.dpls');
+
+        $search1 = $playlist->search();
+        $search1->orderRandomly();
+        $keys1 = implode(',', array_keys($search1->find()));
+
+        $search2 = $playlist->search();
+        $search2->orderRandomly();
+        $keys2 = implode(',', array_keys($search2->find()));
+
+        $this->assertNotEquals($keys1, $keys2);
+    }
+
+    public function testSearchOrderResultsRandomlyWithSeed()
+    {
+        $playlist = new Playlist('tests/template.dpls');
+        $seed = 'foobar' . rand(0, 1000);
+
+        $search1 = $playlist->search();
+        $search1->orderRandomly($seed);
+        $keys1 = implode(',', array_keys($search1->find()));
+
+        $search2 = $playlist->search();
+        $search2->orderRandomly($seed);
+        $keys2 = implode(',', array_keys($search2->find()));
+
+        $this->assertEquals($keys1, $keys2);
     }
 }
