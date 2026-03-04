@@ -368,7 +368,7 @@ class Playlist
     public function deletePosition(int $position, &$item = null): bool
     {
         if ($item = $this->getItem($position)) {
-            $this->jsonLines->deleteObject($position);
+            $this->jsonLines->deleteObject($position + 1);
             return true;
         }
 
