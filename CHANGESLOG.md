@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.1] - 2026-03-04
+### Fixed
+- [issue 5](https://github.com/Wishgranter-project/descriptive-playlist/issues/5) `Playlist::deletePosition()` deletes the wrong playlist item.
+
+---
+
+
 ## [6.1.0] - 2025-01-27
 ### Added
 - Added `Search::orderRandomly()`.
